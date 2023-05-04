@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import SimpleButton from './components/SimpleButton';
+import SimpleButton from '../components/SimpleButton';
 import {
   Appodeal,
   AppodealAdType,
@@ -11,11 +11,6 @@ import {
 // @ts-ignore
 const HomeScreen = ({navigation}) => {
   const [initialized, setInitialized] = useState(false);
-
-  // Appodeal.initialize(
-  //   'd2b4133e7c6cc66962ed3a855cd591e05a141138a4796bc1',
-  //   AppodealAdType.BANNER,
-  // );
 
   useEffect(() => {
     Appodeal.addEventListener(AppodealSdkEvent.INITIALIZED, () =>
