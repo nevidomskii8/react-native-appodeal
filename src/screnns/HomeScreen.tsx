@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Switch} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import SimpleButton from '../components/SimpleButton';
 import {
@@ -7,17 +7,35 @@ import {
   AppodealBanner,
   AppodealSdkEvent,
 } from 'react-native-appodeal';
+import {initialize, isInitialized, SDKState} from '../advertising';
+import {InitialisationSection} from '../components/sections/InitialisationSection';
+import {Row} from '../components';
 
 // @ts-ignore
 const HomeScreen = ({navigation}) => {
   const [initialized, setInitialized] = useState(false);
+  const [testMode, setTestMode] = React.useState(true);
 
-  useEffect(() => {
-    Appodeal.addEventListener(AppodealSdkEvent.INITIALIZED, () =>
-      setInitialized(true),
-    );
-    Appodeal.show(AppodealAdType.BANNER);
-  }, []);
+  const [state, setState] = React.useState(
+    isInitialized() ? SDKState.INITIALIZED : SDKState.PENDING,
+  );
+
+  const initSDK = () => {
+    if (state === SDKState.INITIALIZING) {
+      return;
+    }
+
+    if (state !== SDKState.INITIALIZED) {
+      setState(SDKState.INITIALIZING);
+      Appodeal.addEventListener(AppodealSdkEvent.INITIALIZED, () => {
+        setState(SDKState.INITIALIZED);
+        Appodeal.show(AppodealAdType.BANNER);
+        setInitialized(true)
+      });
+    }
+
+    initialize(true);
+  };
 
   const onBannerAdsPress = () => {
     navigation.navigate('InterstitialAdsScreen');
@@ -26,8 +44,14 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate('RewardedAdsScreen');
   };
 
+  const testModeSwitch = () => (
+    <Switch value={testMode} onValueChange={setTestMode} />
+  );
+
   return (
     <View style={homeStyle.sectionContainer}>
+      <InitialisationSection state={state} onInitialize={initSDK} />
+      <Row title="Test mode" accessory={testModeSwitch} />
       {initialized && (
         <>
           <SimpleButton

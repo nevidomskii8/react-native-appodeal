@@ -9,11 +9,6 @@ import { Appodeal, AppodealAdType } from "react-native-appodeal";
 
 const InterstitialAddsScreen = () => {
 
-  // Appodeal.initialize(
-  //   'd2b4133e7c6cc66962ed3a855cd591e05a141138a4796bc1',
-  //   AppodealAdType.INTERSTITIAL,
-  // );
-
   useEffect(() => {
     Appodeal.show(AppodealAdType.INTERSTITIAL);
   }, []);

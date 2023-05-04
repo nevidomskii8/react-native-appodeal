@@ -14,7 +14,7 @@ export const Row = (props: {
   accessory?(): any;
 }) => {
   return (
-    <TouchableHighlight onPress={() => props.onClick && props.onClick()}>
+    <TouchableHighlight style={{width: '100%'}} onPress={() => props.onClick && props.onClick()}>
       <View style={styles.rowContainer}>
         <View style={styles.contentRowContainer}>
           <View style={styles.titlesRowContainer}>

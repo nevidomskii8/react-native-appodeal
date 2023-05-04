@@ -29,10 +29,10 @@ export const InitialisationSection = (props: InitialisationSectionProps) => {
   };
 
   return (
-    <View>
+    <View style={{width: '100%'}}>
       <SectionHeader value="Initialisation" />
       <Row title="Initialise" accessory={accessory} />
-      <LinkRow title="Advanced Features" route="/advanced_features" />
+      {/*<LinkRow title="Advanced Features" route="/advanced_features" />*/}
     </View>
   );
 };
